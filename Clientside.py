@@ -33,7 +33,7 @@ class ClientsideCommand(sublime_plugin.TextCommand):
 		self.view.set_status('clientside', "Clientside "+file_ext +" "+ operation)
 
 		for sel in selections:
-			selbody = self.view.substr(sel).encode('utf-8')
+			selbody = self.view.substr(sel)
 			if operation == 'minify':
 				if file_ext == 'css':
 					new_str = self.get_css_minified(selbody)
@@ -49,8 +49,6 @@ class ClientsideCommand(sublime_plugin.TextCommand):
 					new_str = self.get_css_lint(selbody)
 				else:
 					new_str = self.get_js_lint(selbody)
-
-			new_str = new_str.decode('utf-8')
 			
 			if output == "replace":
 				self.view.replace(edit, sel, new_str)

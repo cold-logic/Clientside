@@ -563,8 +563,8 @@ class Beautifier:
                                 esc1 = int(resulting_string[-esc2:], 16)
                             except Exception:
                                 esc1 = False
-                            if esc1 and esc1 >= 0x20 and esc1 <= 0x7e:
-                                esc1 = chr(esc1)
+                            if esc1 and esc1 >= 0x20: # and esc1 <= 0x7e:
+                                esc1 = unichr(esc1)
                                 resulting_string = resulting_string[:-2 - esc2]
                                 if esc1 == sep or esc1 == '\\':
                                         resulting_string += '\\'
