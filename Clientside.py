@@ -1,8 +1,8 @@
 import sublime, sublime_plugin
 
-from StringIO import StringIO
-from jsmin import JavascriptMinify
-from cssmin import CSSMin
+from io import StringIO
+from .jsmin import JavascriptMinify
+from .cssmin import CSSMin
 import jsbeautifier
 import os
 import re
@@ -53,21 +53,24 @@ class ClientsideCommand(sublime_plugin.TextCommand):
 			if output == "replace":
 				self.view.replace(edit, sel, new_str)
 			elif output == "new":
-				new_view = self.window.new_file()
-				new_edit = new_view.begin_edit()
+				new_view = self.view.window().new_file()
+				new_view.set_scratch(True)
+				# new_edit = new_view.begin_edit()
 				if operation == "lint":
 					syntax = "Packages/JavaScript/JavaScript.tmLanguage"
 				new_view.set_syntax_file(syntax)
-				new_view.insert(new_edit, 0, new_str)
-				new_view.end_edit(new_edit)
+				# new_view.insert(new_edit, 0, new_str)
+				# new_view.end_edit(new_edit)
+				new_view.insert(edit, 0, new_str)
+				# new_view.end_edit(edit)
 			elif output == "clipboard":
 				sublime.set_clipboard(new_str)
 				self.view.set_status("clientside", "Code is copied to your clipboard")
 			else:
-				print new_str
+				print(new_str)
 				self.view.set_status("clientside", "Code is in the console")
 		
-		selections.clear()
+		# selections.clear()
 		sublime.set_timeout(self.clear_status,5000)
 
 	# CSS Helpers =========================================================
@@ -156,7 +159,7 @@ class ClientsideCommand(sublime_plugin.TextCommand):
 			opts.indent_size = int(self.user_settings.get('tab_size',False))
 		
 		# pull the rest of settings from our config
-		for k,v in self.settings.get('jsformat', {}).iteritems():
+		for k,v in self.settings.get('jsformat', {}).items():
 			setattr(opts, k, v)
 				
 		return jsbeautifier.beautify(codestr, opts)
