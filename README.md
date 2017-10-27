@@ -37,7 +37,7 @@ The recommended install is via the [Package Control](http://wbond.net/sublime_pa
 - Go to the Preferences -> Package Settings -> Clientside and set preferences and nodejs path
 
 If you need to manually install:
-- Copy or clone the repository from https://github.com/trentrichardson/Clientside into your packages folder ("Packages/Clientside")
+- Copy or clone the repository from https://github.com/cold-logic/Clientside into your packages folder ("Packages/Clientside")
 - Go to the Preferences -> Package Settings -> Clientside and set preferences and nodejs path
 
 Configure
